@@ -21,10 +21,10 @@ class Author(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return f'{self.last_name}, {self.first_name}' 
+        return f'{self.first_name} {self.last_name}' 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=100, help_text = "enter a book genre(e.g. Science, Inspirational etc)")
+    name = models.CharField(max_length=100,  help_text = "enter a book genre(e.g. Science, Inspirational etc)")
 
     def __str__(self):
         return self.name
@@ -39,17 +39,19 @@ class Language(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=100)
     # author = models.ManyToManyField(Author)
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, )
     summary = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
     language = models.ForeignKey(Language,  on_delete=models.SET_NULL, null=True)
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
     ISBN = models.CharField('ISBN', max_length=13, unique=True,  help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     # availability_status = models.BooleanField(default=False)
     
+    def display_genre(self):
+        return ', '.join(g.name for g in self.genre.all()[:3])
     def __str__(self):
-        return self.title
+        return f'{self.title} | {self.author}'
     def get_absolute_url(self):
-        return reverse('bool-detail', args=[str(self.id)])
+        return reverse('book-detail', args=[str(self.id)])
     
 
 class BookInstance(models.Model):
@@ -69,9 +71,10 @@ class BookInstance(models.Model):
     # borrower = models.ForeignKey(User, on_delete=models.CASCADE)
     class Meta:
         ordering = ['due_back']
+        verbose_name = 'Book Instance'
 
     def __str__(self):
-        return f'{self.id} {self.book.title}'
+        return f'{self.book.title}'
     
     def get_absolute_url(self):
         return reverse('bookinstance-detail', args=[str(self.id)])
