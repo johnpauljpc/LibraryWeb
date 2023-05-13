@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %}
+
+{% block content%}
+<h1>Local Library Home</h1>
+<p>Welcome to JPC Library, Just trying to build something cool. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos, atque quia suscipit qui sapiente velit dicta autem corrupti architecto facilis possimus numquam ab enim porro doloribus totam molestias quibusdam id!</p>
+<h1>Dynamic Content</h1>
+The Library has the following record counts:
+<ul>
+    <li><b>Books:</b> {{bookCount}}</li>
+    <li><b>Copies:</b> {{bookIns.count}} </li>
+    <li><b>Copies available:</b> {{avCopies.count}}</li>
+    <li><b>Authors:</b>{{authors.count}} </li>
+</ul>
+{% endblock content %}

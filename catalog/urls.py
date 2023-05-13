@@ -1,9 +1,9 @@
 from django.urls import path
 from django.views.generic import RedirectView
-from .views import *
+from .views import home
 
 
 urlpatterns = [
-    path('hi/', index)
+    path('', home, name="home")
     
 ]

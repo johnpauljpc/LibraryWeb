@@ -1,0 +1,29 @@
+
+*{
+    color: rgb(42, 165, 108);
+}
+/* TAGS */
+li{
+    list-style: none;;
+}
+a{
+    text-decoration: none;
+}
+
+
+
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    
+}
+
+.sidebar{
+    width: 20%;
+}
+
+.main-content{
+    width: 70%;
+}
