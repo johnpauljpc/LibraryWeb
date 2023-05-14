@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
 from .models import Book, Author, BookInstance
+
 
 # Create your views here.
 def home(request):
@@ -19,3 +21,13 @@ def home(request):
         
     }
     return render(request, 'index.html', context)
+
+class BookView(ListView):
+    model = Book
+    template_name = 'book-list.html'
+    context_object_name = 'books'
+
+class BookDetail(DetailView):
+    model = Book
+    template_name = "book-detail.html"
+    context_object_name = "book"

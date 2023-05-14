@@ -1,11 +1,7 @@
 
-*{
-    color: rgb(42, 165, 108);
-}
+
 /* TAGS */
-li{
-    list-style: none;;
-}
+
 a{
     text-decoration: none;
 }
@@ -22,6 +18,9 @@ a{
 
 .sidebar{
     width: 20%;
+}
+.sidebar li{
+    list-style: none;
 }
 
 .main-content{
