@@ -26,6 +26,7 @@ class BookView(ListView):
     model = Book
     template_name = 'book-list.html'
     context_object_name = 'books'
+    queryset = Book.objects.all()#filter(title__icontains='a')[:5] # Get 5 books containing the title war
 
 class BookDetail(DetailView):
     model = Book
