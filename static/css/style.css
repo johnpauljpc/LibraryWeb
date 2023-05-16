@@ -26,3 +26,21 @@ a{
 .main-content{
     width: 70%;
 }
+
+.text-success{
+    font-weight: bold;
+    color: green;
+}
+
+.text-danger{
+    font-weight: bold;
+    color: crimson;
+}
+
+.text-warning{
+    font-weight: bold;
+    color: goldenrod;
+}
+.text-muted{
+    color: dimgrey;
+}
