@@ -33,3 +33,11 @@ class BookDetail(DetailView):
     model = Book
     template_name = "book-detail.html"
     context_object_name = "book"
+
+class AuthorListView(ListView):
+    model = Author
+    template_name = 'authors.html'
+
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'author_detail.html'
