@@ -11,13 +11,18 @@ def home(request):
     bookInstance = BookInstance.objects.all()
     availableBooks = BookInstance.objects.filter(status__exact='a')
     bookCount = books.count()
+    number_visits = request.session.get('number_visits', 0)
+    request.session['number_visits'] = number_visits + 1
+    # request.session['number_visits'] = 0
+    # request.session.modified = True
     
     context = {
         'bookCount':bookCount,
         'books':books,
         'authors':authors,
         'bookIns':bookInstance,
-        'avCopies': availableBooks
+        'avCopies': availableBooks,
+        'number_visits':number_visits
         
     }
     return render(request, 'index.html', context)
