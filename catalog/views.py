@@ -4,10 +4,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from .models import Book, Author, BookInstance
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 # Create your views here.
+
 def home(request):
     books = Book.objects.all()
     authors = Author.objects.all()
@@ -61,3 +63,12 @@ class LoanedBooksByUserListView(LoginRequiredMixin, ListView):
         QS = BookInstance.objects.filter(borrower = self.request.user).filter(status__exact = 'o').order_by('due_back')
         return QS
         # return super().get_queryset()
+
+class AllBorrowedBooks(LoginRequiredMixin,PermissionRequiredMixin, ListView):
+    model = BookInstance
+    template_name = 'librarian/borrowed-books.html'
+    permission_required = 'can_mark_returned'
+
+    def get_queryset(self):
+        QS = BookInstance.objects.filter(status__exact = 'o')
+        return QS

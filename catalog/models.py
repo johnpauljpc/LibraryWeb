@@ -83,7 +83,9 @@ class BookInstance(models.Model):
         if self.due_back:
             return bool(self.due_back and date.today() > self.due_back)
         
-    
+    class Meta:
+        # …
+        permissions = (("can_mark_returned", "Set book as returned"), )
 
     
     def get_absolute_url(self):
