@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 import uuid
+from datetime import date
 
 # Create your models here.
 class Author(models.Model):
@@ -75,6 +76,15 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return f'{self.book.title}'
+    
+    @property
+    def is_overdue(self):
+        """Determines if the book is overdue based on due date and current date."""
+        if self.due_back:
+            return bool(self.due_back and date.today() > self.due_back)
+        
+    
+
     
     def get_absolute_url(self):
         return reverse('bookinstance-detail', args=[str(self.id)])

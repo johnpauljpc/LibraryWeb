@@ -1,7 +1,10 @@
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from .models import Book, Author, BookInstance
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -46,3 +49,15 @@ class AuthorListView(ListView):
 class AuthorDetailView(DetailView):
     model = Author
     template_name = 'author_detail.html'
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, ListView):
+    model = BookInstance
+    template_name = 'lonedbookes-by-user.html'
+    context_object_name = 'borrowedBooks'
+
+
+    def get_queryset(self):
+        QS = BookInstance.objects.filter(borrower = self.request.user).filter(status__exact = 'o').order_by('due_back')
+        return QS
+        # return super().get_queryset()
