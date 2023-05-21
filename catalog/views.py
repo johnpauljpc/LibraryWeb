@@ -1,9 +1,11 @@
-from typing import Any
+import datetime
 from django.db.models.query import QuerySet
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from .models import Book, Author, BookInstance
+from .forms import RenewBookForm
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
@@ -18,6 +20,7 @@ def home(request):
     bookCount = books.count()
     number_visits = request.session.get('number_visits', 0)
     request.session['number_visits'] = number_visits + 1
+   
     # request.session['number_visits'] = 0
     # request.session.modified = True
     
@@ -27,9 +30,11 @@ def home(request):
         'authors':authors,
         'bookIns':bookInstance,
         'avCopies': availableBooks,
-        'number_visits':number_visits
+        'number_visits':number_visits,
+      
         
     }
+    
     return render(request, 'index.html', context)
 
 class BookView(ListView):
@@ -72,3 +77,25 @@ class AllBorrowedBooks(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     def get_queryset(self):
         QS = BookInstance.objects.filter(status__exact = 'o')
         return QS
+
+
+def RenewBooks(request, pk):
+
+    book = get_object_or_404(BookInstance,id=pk)
+    form = RenewBookForm()
+
+    if request.method == 'POST':
+        form = RenewBookForm(request.POST)
+        if form.is_valid():
+            book.due_back = form.cleaned_data['renewal_date']
+            book.save()
+            return HttpResponseRedirect(reverse('books-borrowed-out'))
+        else:
+            proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+            form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+
+    context = {
+        'form':form,
+        'book':book
+    }
+    return render(request, 'librarian/renew-books.html', context)
