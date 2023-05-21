@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from .models import Book, Author, BookInstance
 from .forms import RenewBookForm
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
@@ -78,7 +78,8 @@ class AllBorrowedBooks(LoginRequiredMixin,PermissionRequiredMixin, ListView):
         QS = BookInstance.objects.filter(status__exact = 'o')
         return QS
 
-
+@login_required(login_url='login')
+@permission_required('catalog.can_renew', raise_exception=True)
 def RenewBooks(request, pk):
 
     book = get_object_or_404(BookInstance,id=pk)

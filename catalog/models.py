@@ -85,7 +85,7 @@ class BookInstance(models.Model):
         
     class Meta:
         # …
-        permissions = (("can_mark_returned", "Set book as returned"), )
+        permissions = (("can_mark_returned", "Set book as returned"), ("can_renew", "Can renew Borrwed Book") )
 
     
     def get_absolute_url(self):
