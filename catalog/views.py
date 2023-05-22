@@ -85,6 +85,8 @@ def RenewBooks(request, pk):
     book = get_object_or_404(BookInstance,id=pk)
     form = RenewBookForm()
 
+    
+
     if request.method == 'POST':
         form = RenewBookForm(request.POST)
         if form.is_valid():
@@ -93,10 +95,15 @@ def RenewBooks(request, pk):
             return HttpResponseRedirect(reverse('books-borrowed-out'))
         else:
             proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
-            form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+            
+            ini_val = {
+                'renewal_date':'2023-03-03'
+            }
+            form = RenewBookForm(request.POST or None, initial= ini_val)
 
     context = {
         'form':form,
         'book':book
     }
     return render(request, 'librarian/renew-books.html', context)
+

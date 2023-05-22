@@ -13,6 +13,7 @@
       <li class="{% if bk.is_overdue %}text-danger{% endif %}">
         <a href="{% url 'book-detail' bk.book.pk %}">{{ bk.book.title }}</a> ({{ bk.due_back }})
         <i>Borrower: {{bk.borrower}}</i>
+        <p><a href="{% url 'renew-books' bk.id %}">Renew Books</a></p>
       </li>
       {% endfor %}
     </ul>
