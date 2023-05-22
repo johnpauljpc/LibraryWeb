@@ -72,7 +72,7 @@ class LoanedBooksByUserListView(LoginRequiredMixin, ListView):
 class AllBorrowedBooks(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     model = BookInstance
     template_name = 'librarian/borrowed-books.html'
-    permission_required = 'can_mark_returned'
+    permission_required = "catalog.can_mark_returned"
 
     def get_queryset(self):
         QS = BookInstance.objects.filter(status__exact = 'o')
