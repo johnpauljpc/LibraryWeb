@@ -1,9 +1,9 @@
 import datetime
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from .models import Book, Author, BookInstance
 from .forms import RenewBookForm
 from django.contrib.auth.decorators import permission_required, login_required
@@ -106,3 +106,37 @@ def RenewBooks(request, pk):
     }
     return render(request, 'librarian/renew-books.html', context)
 
+
+class AuthorCreate(CreateView):
+    model = Author
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+    initial = {'date_of_death': '11/06/2020'}
+    template_name = 'author/author_form.html'
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = '__all__' # Not recommended (potential security issue if more fields added)
+    template_name = 'author/author_form.html'
+
+class AuthorDelete(DeleteView):
+    model = Author
+    template_name = 'author/confirm_delete_author.html'
+    success_url = reverse_lazy('authors')
+
+
+
+class CreateBook(CreateView):
+    model = Book
+    template_name = 'books/book_form.html'
+    fields = "__all__"
+
+
+class UpdateBook(UpdateView):
+    model = Book
+    template_name = 'books/book_form.html'
+    fields = "__all__"
+
+class DeleteBook(DeleteView):
+    model = Book
+    template_name = 'books/confirm_book_delete.html'
+    reverse_lazy = 'books'
