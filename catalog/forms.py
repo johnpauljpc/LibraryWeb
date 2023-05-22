@@ -12,20 +12,10 @@ from .models import BookInstance
 #         fields = ('due_back', )
 
 
-class RenewBookForm(forms.Form):
-    renewal_date = forms.DateField()#(help_text="Enter a date between now and 4 weeks (default 3).")
-    
+class RenewBookForm(forms.ModelForm):
 
-    renewal_date = forms.DateField(widget=forms.TextInput(attrs={
-        'placeholder':'YYYY-MM-DD',
-        'type':'date',
-        
-        
-        
-    }))
-
-    def clean_renewal_date(self):
-        data = self.cleaned_data['renewal_date']
+    def clean_due_back(self):
+        data = self.cleaned_data['due_back']
 
         # Check if a date is not in the past.
         if (data < datetime.date.today()):
@@ -39,3 +29,18 @@ class RenewBookForm(forms.Form):
             raise ValidationError(_(f'Invalid date - renewal can\'t be more than 4 weeks from today({datetime.date.today()}) '))
         
         return data
+    
+    class Meta:
+        model = BookInstance
+        fields = ['due_back']
+        labels = {'due_back':_('Renewal Date')}
+        help_texts = {
+            'due_back':_('Enter a date between now and 4 weeks (default 3).')
+        }
+
+        widgets = {
+            'due_back': forms.DateInput(attrs={
+                'type':'date',
+                
+            })
+        }

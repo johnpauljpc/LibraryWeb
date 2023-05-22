@@ -87,7 +87,7 @@ def RenewBooks(request, pk):
     proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
     print("*****************************")
     print(proposed_renewal_date)
-    form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+    form = RenewBookForm(initial={'due_back': proposed_renewal_date})
     
     
 
