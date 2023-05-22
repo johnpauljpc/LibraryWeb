@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 from .views import (home, BookView, BookDetail, AuthorListView,
                      AuthorDetailView, LoanedBooksByUserListView,
-                     AllBorrowedBooks, RenewBooks, home_view)
+                     AllBorrowedBooks, RenewBooks)
 
 
 urlpatterns = [

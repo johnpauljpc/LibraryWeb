@@ -84,7 +84,11 @@ def RenewBooks(request, pk):
 
     book = get_object_or_404(BookInstance,id=pk)
     form = RenewBookForm()
-
+    proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+    print("*****************************")
+    print(proposed_renewal_date)
+    form = RenewBookForm(initial={'renewal_date': proposed_renewal_date})
+    
     
 
     if request.method == 'POST':
@@ -93,13 +97,8 @@ def RenewBooks(request, pk):
             book.due_back = form.cleaned_data['renewal_date']
             book.save()
             return HttpResponseRedirect(reverse('books-borrowed-out'))
-        else:
-            proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+      
             
-            ini_val = {
-                'renewal_date':'2023-03-03'
-            }
-            form = RenewBookForm(request.POST or None, initial= ini_val)
 
     context = {
         'form':form,
