@@ -94,7 +94,7 @@ def RenewBooks(request, pk):
     if request.method == 'POST':
         form = RenewBookForm(request.POST)
         if form.is_valid():
-            book.due_back = form.cleaned_data['renewal_date']
+            book.due_back = form.cleaned_data['due_back']
             book.save()
             return HttpResponseRedirect(reverse('books-borrowed-out'))
       
