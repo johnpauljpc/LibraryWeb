@@ -28,9 +28,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG', cast = bool)
+print ('*********************************')
+print(DEBUG)
+print(SECRET_KEY)
+print('***********************************')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://127.0.0.1:8000/','*']
 
 
 # Application definition
@@ -137,3 +141,12 @@ EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+
+# Check --deploy settled here
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE  = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 20
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD  = True
