@@ -1,5 +1,7 @@
 #Ignore .sql
-*.sqlite3
+.sqlite3
 
-#ignore .env
-*.env
+
+
+### dotenv ###
+.env

@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 import environ
 
+
+
 env  = environ.Env()
 environ.Env.read_env()
 
@@ -109,6 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# Update database configuration from $DATABASE_URL environment variable (if defined)
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
