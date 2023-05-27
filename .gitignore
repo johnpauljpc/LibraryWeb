@@ -1,7 +1,7 @@
 #Ignore .sql
 .sqlite3
 
-
+.jpc
 
 ### dotenv ###
 .env
