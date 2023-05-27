@@ -1,0 +1,5 @@
+#Ignore .sql
+*.sqlite3
+
+#ignore .env
+*.env
