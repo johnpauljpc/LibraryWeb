@@ -1,7 +1,9 @@
 #Ignore .sql
 .sqlite3
 
-.jpc
+*.jpcg
+*.jpc
+*.jjpp
 
 ### dotenv ###
 .env
